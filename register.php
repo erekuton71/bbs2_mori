@@ -1,16 +1,31 @@
 <?php
 require_once 'DbManager.php';
-require_once 'bbs1Validator.php';
+require_once 'signupValidator.php';
+?>
 
+<!DOCTYPE html>
+<html lang="ja">
+<html>
+<meta charset="UTF-8">
+<head><title>新規登録　テクアカ課題BBS2</title></head>
+<body>
+<h1 aligin="center">テクアカ課題BBS2</h1>
+<hr />
+<a  href="signup.php">新規登録ページに戻る</a>
+
+<?php
 //入力データの受け取り
 $name = $_POST['name'];
-$contents = $_POST['contents'];
+$password = $_POST['password'];
 
 //エラー表示
-$v = new bbs1Validator();
-$v->requiredCheck($_POST['name'], '名前');
-$v->requiredCheck($_POST['contents'], '本文');
-$v->lengthCheck($_POST['name'], '名前', 255);
+$v = new signupValidator();
+$v->requiredCheck($name, 'ユーザ名');
+$v->requiredCheck($password, 'パスワード');
+$v->duplicateCheck($name, $name, 'SELECT name FROM member_table WHERE name = :value');
+$v->lengthCheck($name, 'ユーザ名', 20);
+$v->rangeCheck($password, 'パスワード', 20, 6);
+$v->alnumTypeCheck($name, 'ユーザ名');
 $v();
 
 try {
@@ -18,12 +33,12 @@ try {
     $db = getDb();
     //INSERT命令の準備
     $stt = $db->prepare('
-    INSERT INTO post_table (name, contents) 
-    VALUES (:name, :contents)
+    INSERT INTO member_table (name, password) 
+    VALUES (:name, :password)
     ');
     //INSERT命令にポストデータの内容をセット
     $stt->bindValue(':name', $name);
-    $stt->bindValue(':contents', $contents);
+    $stt->bindValue(':password', $password);
 
     //INSERT命令を実行
     $stt->execute();
@@ -31,5 +46,9 @@ try {
 }   catch (PDOException $e) {
     die("エラーメッセージ: {$e->getMessage()}");
 }
-    //処理後は掲示板トップページにリダイレクト
-header('Location: bbs1.php');
+//処理後は掲示板トップページにリダイレクト
+header('Location: signup.php');
+?>
+
+</body>
+</html>

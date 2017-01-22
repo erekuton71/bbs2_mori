@@ -1,6 +1,6 @@
 <?php
 function getDb() {
-    $dsn = 'mysql:dbname=board1_db;host=localhost';
+    $dsn = 'mysql:dbname=board2_db;host=localhost';
     $user = 'root';
     $password = '';
 

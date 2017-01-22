@@ -1,7 +1,7 @@
 <?php
 require_once 'DbManager.php';
 
-class bbs1Validator
+class bbs2Validator
 {
     //エラーメッセージを格納するためのプライベート変数（配列）
     private $_errors;
