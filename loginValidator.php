@@ -1,7 +1,7 @@
 <?php
 require_once 'DbManager.php';
 
-class signupValidator
+class loginValidator
 {
     //エラーメッセージを格納するためのプライベート変数（配列）
     private $_errors;
@@ -26,7 +26,7 @@ class signupValidator
     private function checkEncoding(array $data) {
         foreach ($data as $key => $value) {
             if (preg_match('/\0/', $value)) {
-                    $this->_errors[] = "{$key}は不正な文字コードです。";
+                $this->_errors[] = "{$key}は不正な文字コードです。";
             }
         }
     }
@@ -43,25 +43,8 @@ class signupValidator
     //必須検証
     public function requiredCheck($value, $word) {
         if (trim($value) === '') {
-            $this->_errors[] = "{$word}は必須入力です。";
-        }
-    }
+            $this->_errors[] = "{$word}が入力されていません。";
 
-    //重複検証（データベースの内容と重複していないか）
-    public function duplicateCheck($value, $word, $sql) {
-        if (trim($value) !== '') {
-            try {
-                $db = getDb();
-                $stt = $db->prepare($sql);
-                $stt->bindValue(':value', $value);
-                $stt->execute();
-                if (($row = $stt->fetch()) !== FALSE) {
-                    $this->_errors[] = "{$word}は既に使われています。他のユーザ名を指定してください。";
-                }
-            }
-            catch (PDOException $e) {
-                $this->_errors[] = $e->getMessage();
-            }
         }
     }
 
@@ -129,6 +112,22 @@ class signupValidator
                 $tmp = implode(',', $opts); //配列要素を連結
                 $this->_errors[] = "{$word}は正しい形式で入力してください。";
             }
+        }
+    }
+
+    //重複検証（データベースの内容と重複していないか）
+    public function duplicateCheck($value, $word, $sql) {
+        try {
+            $db = getDb();
+            $stt = $db->prepare($sql);
+            $stt->bindValue(':value', $value);
+            $stt->execute();
+            if (($row = $stt->fetch()) !== FALSE) {
+                $this->_errors[] = "{$word}は既に使われています。他のユーザ名を指定してください。";
+            }
+        }
+        catch (PDOException $e) {
+            $this->_errors[] = $e->getMessage();
         }
     }
 

@@ -18,14 +18,17 @@ require_once 'signupValidator.php';
 $name = $_POST['name'];
 $password = $_POST['password'];
 
+//passwordのハッシュ化
+$hashpass = password_hash($_POST['password'],PASSWORD_DEFAULT);
+
 //エラー表示
 $v = new signupValidator();
 $v->requiredCheck($name, 'ユーザ名');
-$v->requiredCheck($password, 'パスワード');
-$v->duplicateCheck($name, $name, 'SELECT name FROM member_table WHERE name = :value');
-$v->lengthCheck($name, 'ユーザ名', 20);
-$v->rangeCheck($password, 'パスワード', 20, 6);
 $v->alnumTypeCheck($name, 'ユーザ名');
+$v->lengthCheck($name, 'ユーザ名', 20);
+$v->duplicateCheck($name, $name, 'SELECT name FROM member WHERE name = :value');
+$v->requiredCheck($password, 'パスワード');
+$v->rangeCheck($password, 'パスワード', 20, 6);
 $v();
 
 try {
@@ -33,12 +36,12 @@ try {
     $db = getDb();
     //INSERT命令の準備
     $stt = $db->prepare('
-    INSERT INTO member_table (name, password) 
+    INSERT INTO member (name, password) 
     VALUES (:name, :password)
     ');
     //INSERT命令にポストデータの内容をセット
     $stt->bindValue(':name', $name);
-    $stt->bindValue(':password', $password);
+    $stt->bindValue(':password', $hashpass);
 
     //INSERT命令を実行
     $stt->execute();

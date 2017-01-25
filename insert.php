@@ -1,14 +1,15 @@
 <?php
 require_once 'DbManager.php';
-require_once 'bbs2Validator.php';
+//require_once 'bbs2Validator.php';
 
 //入力データの受け取り
 $name = $_POST['name'];
 $contents = $_POST['contents'];
 
+/*
 //エラー表示
 $v = new bbs2Validator();
-$v->requiredCheck($_POST['name'], '名前');
+$v->requiredCheck($_POST['user_id'], 'ユーザID');
 $v->requiredCheck($_POST['contents'], '本文');
 $v->lengthCheck($_POST['name'], '名前', 255);
 $v();

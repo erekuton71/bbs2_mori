@@ -12,7 +12,7 @@ require_once 'signupValidator.php';
 <body>
 <h1 aligin="center">テクアカ課題BBS2</h1>
 <hr />
-<a  href="login.php">ログインページに戻る</a>
+<a  href="index.php">ログインページに戻る</a>
 <ul>
     <li>ユーザ名は半角英数字で20文字以内</li>
     <li>パスワードは半角英数字で6文字以上20文字以内</li>
@@ -36,7 +36,7 @@ try {
 //データベースへの接続を確立
     $db = getDb();
 //SELECT命令の実行
-    $stt = $db->prepare('SELECT * FROM member_table ORDER BY id DESC');
+    $stt = $db->prepare('SELECT * FROM member ORDER BY id DESC');
     $stt->execute();
 //結果セットの内容を順に出力
     while($row = $stt->fetch(PDO::FETCH_ASSOC)) {
