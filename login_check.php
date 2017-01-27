@@ -1,15 +1,17 @@
 <?php
 require_once 'DbManager.php';
-require_once 'loginValidator.php';
+require_once 'bbs2Validator.php';
+//セッション開始
+session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <html>
 <meta charset="UTF-8">
-<head><title>ログイン　テクアカ課題BBS2</title></head>
+<head><title>BBS2ログイン</title></head>
 <body>
-<h1 aligin="center">テクアカ課題BBS2</h1>
+<h1 aligin="center">BBS2ログインエラー</h1>
 <hr />
 <a  href="index.php">ログインページに戻る</a>
 
@@ -19,31 +21,32 @@ $name = $_POST['name'];
 $password = $_POST['password'];
 
 //エラー表示
-$v = new loginValidator();
-$v->requiredCheck($name, 'ユーザ名');
-$v->requiredCheck($password, 'パスワード');
+$v = new bbs2Validator();
+$v->login_requiredCheck($name, 'ユーザ名');
+$v->login_requiredCheck($password, 'パスワード');
 $v();
 
 try {
-    //データベースへの接続を確立
+//データベースへの接続を確立
     $db = getDb();
-    //INSERT命令の準備
-    $stt = $db->prepare('
-    INSERT INTO member (name, password) 
-    VALUES (:name, :password)
-    ');
-    //INSERT命令にポストデータの内容をセット
-    $stt->bindValue(':name', $name);
-    $stt->bindValue(':password', $password);
-
-    //INSERT命令を実行
+    $stt = $db->prepare("SELECT * FROM member WHERE name = '$name'");
     $stt->execute();
+    $row = $stt->fetch(PDO::FETCH_NAMED);
+    $hashpassword = $row['password'];
+    if (password_verify($password, $hashpassword)) {
+        //セッションIDを新規に発行
+        session_regenerate_id(true);
+        $_SESSION['user_id'] = $row['id'];
+        header('Location: bbs2.php');
+    } else {
+        print '<ul style="color:Red">';
+            print "<li>ユーザ名またはパスワードが違います。</li>";
+        print '</ul>';
+    }
     $db = NULL;
 }   catch (PDOException $e) {
     die("エラーメッセージ: {$e->getMessage()}");
 }
-//処理後は掲示板トップページにリダイレクト
-//header('Location: bbs2.php');
 ?>
 
 </body>

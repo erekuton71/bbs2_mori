@@ -1,23 +1,23 @@
 <?php
 require_once 'DbManager.php';
 require_once 'Encode.php';
-require_once 'signupValidator.php';
+require_once 'bbs2Validator.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <html>
 <meta charset="UTF-8">
-<head><title>ログイン　テクアカ課題BBS2</title></head>
+<head><title>BBS2新規会員登録</title></head>
 <body>
-<h1 aligin="center">テクアカ課題BBS2</h1>
+<h1 aligin="center">BBS2新規会員登録</h1>
 <hr />
 <a  href="index.php">ログインページに戻る</a>
 <ul>
     <li>ユーザ名は半角英数字で20文字以内</li>
     <li>パスワードは半角英数字で6文字以上20文字以内</li>
 </ul>
-<form method="POST" action="register.php">
+<form method="POST" action="signUp_insert.php">
     <div style="text-align: center">
         <p>
             <input pattern="^([a-zA-Z0-9]{,20})$" title="半角英数字で20文字以内" name="name" placeholder="ユーザ名" size="20" maxlength="30" />
