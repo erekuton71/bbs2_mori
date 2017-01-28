@@ -1,6 +1,12 @@
 <?php
 require_once 'DbManager.php';
 require_once 'bbs2Validator.php';
+session_start();
+// ログイン状態のチェック
+if (!isset($_SESSION["user_id"])) {
+    header("Location: index.php");
+    exit;
+}
 
 //入力データの受け取り
 $name = $_POST['name'];

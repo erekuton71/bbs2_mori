@@ -31,24 +31,5 @@ require_once 'bbs2Validator.php';
     </div>
 </form>
 
-<?php
-try {
-//データベースへの接続を確立
-    $db = getDb();
-//SELECT命令の実行
-    $stt = $db->prepare('SELECT * FROM member ORDER BY id DESC');
-    $stt->execute();
-//結果セットの内容を順に出力
-    while($row = $stt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-        <p><?php e($row['id']); ?>  ユーザ名：<?php e($row['name']); ?>  パスワード：<?php e($row['password']); ?></p>
-        <?php
-    }
-    $db = NULL;
-}   catch (PDOException $e) {
-    die("エラーメッセージ: {$e->getMessage()}");
-}
-?>
-
 </body>
 </html>

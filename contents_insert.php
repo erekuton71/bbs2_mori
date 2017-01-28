@@ -7,9 +7,6 @@ if (!isset($_SESSION["user_id"])) {
     header("Location: index.php");
     exit;
 }
-echo $_SESSION["user_id"];
-echo $_SESSION["id"];
-echo $_SESSION["contents"];
 ?>
 
 
