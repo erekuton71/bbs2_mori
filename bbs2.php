@@ -61,7 +61,7 @@ try {
     while($row = $stt->fetch(PDO::FETCH_ASSOC)) {
 ?>
         <div style="text-align: left">
-            <p><?php e($row['id']); ?>   ユーザ名：<?php e($row['name']); ?>    <?php e($row['datetime']); ?></p>
+            <p><?php e($row['id']); ?>：<?php e($row['name']); ?> <?php e($row['datetime']); ?></p>
             <form method="post" action="contents_modify.php">
                 <input type="hidden" name="id" value="<?=$row['id']?>">
                 <input type="submit" value="編集">
