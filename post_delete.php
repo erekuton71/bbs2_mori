@@ -46,7 +46,7 @@ try {
     }
     //DELETE命令の準備
     $stt = $db->prepare("DELETE FROM post WHERE id = '$id'");
-    //UPDATE命令を実行
+    //DELETE命令を実行
     $stt->execute();
     $db = NULL;
 }   catch (PDOException $e) {
