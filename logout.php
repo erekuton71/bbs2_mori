@@ -13,10 +13,9 @@
 <?php
 //セッション開始
 session_start();
-if (!(isset($_SESSION["id"]))) {
+if (isset($_SESSION["user_id"])) {
     echo "ログアウトしました。";
-}
-else {
+} else {
     echo "セッションがタイムアウトしました。";
 }
 // セッション変数のクリア
