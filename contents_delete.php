@@ -39,9 +39,9 @@ try {
 
 //結果セットの内容を順に出力
 ?>
-         <div style="text-align: center">
-             <p><?php e($row['id']); ?> ユーザ名：<?php e($row['name']); ?>    <?php e($row['datetime']); ?></p>
-             <p><?php e($row['contents']); ?></p>
+         <div style="text-align: left">
+             <p><?php e($row['id']); ?>：<?php e($row['name']); ?> <?php e($row['datetime']); ?></p>
+             <p><?php echo nl2br($row['contents']); ?></p>
              <form method="post" action="post_delete.php">
                  <p><input type="hidden" name="id" value="<?= $row['id'] ?>"></p>
                  <p><input type="password" name="password" placeholder="パスワードを入力"></p>
