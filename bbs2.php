@@ -57,7 +57,6 @@ try {
 //SELECT命令の実行
     $stt = $db->prepare('SELECT * FROM post ORDER BY id DESC');
     $stt->execute();
-
 //結果セットの内容を順に出力
     while($row = $stt->fetch(PDO::FETCH_ASSOC)) {
 ?>
@@ -67,7 +66,7 @@ try {
                 <input type="hidden" name="id" value="<?=$row['id']?>">
                 <input type="submit" value="編集">
             </form>
-            <p><?php e($row['contents']); ?></p>
+            <p><?php echo nl2br($row['contents']); ?></p>
             <br>
             <br>
         </div>
