@@ -20,7 +20,7 @@ require_once 'bbs2Validator.php';
 <form method="POST" action="signUp_insert.php">
     <div style="text-align: center">
         <p>
-            <input pattern="^([a-zA-Z0-9]{,20})$" title="半角英数字で20文字以内" name="name" placeholder="ユーザ名" size="20" maxlength="30" />
+            <input type="text" name="name" placeholder="ユーザ名" size="20" maxlength="30" />
         </p>
         <p>
             <input type="password" name="password" placeholder="パスワード" size="20" maxlength="30" />
