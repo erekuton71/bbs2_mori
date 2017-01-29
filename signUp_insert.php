@@ -39,7 +39,6 @@ try {
     //INSERT命令にポストデータの内容をセット
     $stt->bindValue(':name', $name);
     $stt->bindValue(':password', $hashpassword);
-
     //INSERT命令を実行
     $stt->execute();
     $db = NULL;
@@ -51,4 +50,4 @@ header('Location: index.php');
 ?>
 
 </body>
-</html>
+
