@@ -57,7 +57,6 @@ try {
 }   catch (PDOException $e) {
     die("エラーメッセージ: {$e->getMessage()}");
 }
-//unset($_SESSION["id"]);
 //処理後は掲示板トップページにリダイレクト
 header('Location: bbs2.php');
 ?>

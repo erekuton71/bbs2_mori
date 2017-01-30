@@ -50,4 +50,8 @@ header('Location: index.php');
 ?>
 
 </body>
+<<<<<<< HEAD
 
+=======
+</html>
+>>>>>>> c1b1cdd345e8e3306a675cb0ec04e6f34d3bfe84
