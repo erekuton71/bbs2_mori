@@ -54,7 +54,5 @@ try {
     die("エラーメッセージ: {$e->getMessage()}");
 }
 ?>
-
-</form>
 </body>
 </html>
